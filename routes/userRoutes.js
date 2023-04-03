@@ -3,7 +3,7 @@ const asyncHandler = require('express-async-handler');
 
 const router = express.Router();
 
-router.post('/users', asyncHandler(async (req, res) => {
+router.post('/', asyncHandler(async (req, res) => {
 	const { username, password, name } = req.body;
 	// create user
 	res.json({ username, name, password });
