@@ -1,26 +1,26 @@
-const db = require('./../config/db');
+const db = require('../config/db');
 
 class Booking {
-    constructor(userId, schedId, seatsBooked) {
-        this.userId = userId;
-        this.schedId = schedId;
+    constructor(userID, schedID, seatsBooked) {
+        this.userID = userID;
+        this.schedID = schedID;
         this.seatsBooked = seatsBooked;
     }
 
-    save() {
-        const date = new Date();
-        const createdAt = date.toLocaleDateString();
-        const query = 'INSERT INTO User VALUES(?, ?, ?)';
+    async save() {
+        const query = `
+            INSERT INTO BOOKING (userID, schedID, seatsBooked) VALUES (?, ?, ?)
+        `;
 
-        const [newBooking, _] = db.execute(query, [this.userId, this.schedId, this.seatsBooked, createdAt]);
+        const [newBooking, _] = await db.execute(query, [this.userID, this.schedID, this.seatsBooked]);
         return newBooking;
     }
 
-    static getSeatsBooked(schedId) {
-        const query = 'SELECT SUM(seatsBooked) FROM User WHERE schedId=(?)';
+    static async getSeatsBooked(schedID) {
+        const query = 'SELECT SUM(seatsBooked) AS ans FROM BOOKING WHERE schedID=(?)';
 
-        const [seatsBooked, _] = db.query(query, [schedId]);
-        return seatsBooked;
+        const [seatsBooked, _] = await db.execute(query, [schedID]);
+        return seatsBooked[0].ans === null ? 0 : parseInt(seatsBooked[0].ans);
     }
 }
 

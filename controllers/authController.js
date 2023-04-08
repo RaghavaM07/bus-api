@@ -1,11 +1,13 @@
 const asyncHandler = require('express-async-handler');
 const jwt = require('jsonwebtoken');
+const User = require('../models/User');
 
 const login = asyncHandler(async (req, res) => {
 	const { username, password } = req.body;
 
 	// Get user details by username
-	const user = { id: 1, username: 'u1', password: 'pass' };
+	const user = await User.findByUsername(username);
+	console.log(user);
 
 	// Check password
 	if (user.password === password) {

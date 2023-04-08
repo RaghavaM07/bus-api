@@ -1,29 +1,40 @@
 const db = require('../config/db');
 
 class Schedule {
-    constructor(date, time, busId, routeId) {
+    constructor(date, time, busID, routeID) {
         this.date = date;
         this.time = time;
-        this.busId = busId;
-        this.routeId = routeId;
+        this.busID = busID;
+        this.routeID = routeID;
     }
 
-    save() {
-        const date = new Date();
-        const createdAt = date.toLocaleDateString();
-        const query = 'INSERT INTO User VALUES(?, ?, ?, ?, ?)';
+    async save() {
+        const query = 'INSERT INTO SCHEDULE (date, time, busID, routeID) VALUES (?, ?, ?, ?)';
 
-        const [newSchedule, _] = db.execute(query, [this.date, this.time, this.busId, this.routeId, createdAt]);
+        const [newSchedule, _] = await db.execute(query, [this.date, this.time, this.busID, this.routeID]);
         return newSchedule;
     }
 
-    static getId(date, from, to, busNumber) {
-        // const query = 'SELECT SUM(seatsBooked) FROM User WHERE schedId=(?)';
-        const query = 
-            "SELECT id AS schedId FROM SCHEDULE WHERE date=(?) AND routeId=( SELECT id AS routeId FROM ROUTE WHERE from = (?) AND to = (?)) AND busId = (?)"
+    static async getId(date, from, to, busNumber) {
+        const query =
+            "SELECT id AS schedId FROM SCHEDULE WHERE SCHEDULE.date=(?) AND routeID=( SELECT id AS routeID FROM ROUTE WHERE ROUTE.from = (?) AND ROUTE.to = (?)) AND busID = (?)"
 
-        const [schedId, _] = db.query(query, [date, from, to, busNumber]);
+        const [schedId, _] = await db.execute(query, [date, from, to, busNumber]);
         return schedId;
+    }
+
+    static async getSched(date, rid) {
+        const query = "SELECT * FROM SCHEDULE WHERE SCHEDULE.date=(?) AND routeID=(?)"
+
+        const [sched, _] = await db.execute(query, [date, rid]);
+        return sched;
+    }
+
+    static async findById(schedId) {
+        const query = "SELECT * FROM SCHEDULE WHERE id = ?"
+
+        const [sched, _] = await db.execute(query, [schedId]);
+        return sched[0];
     }
 }
 

@@ -1,3 +1,5 @@
+const db = require('../config/db');
+
 class Bus {
     constructor(busNumber, seatCapacity, pricePerSeat) {
         this.busNumber = busNumber;
@@ -5,20 +7,19 @@ class Bus {
         this.pricePerSeat = pricePerSeat;
     }
 
-    save() {
-        const date = new Date();
-        const createdAt = date.toLocaleDateString();
-        const query = 'INSERT INTO Bus VALUES(?, ?, ?, ?)';
+    async save() {
+        const query = 'INSERT INTO BUS (busNumber, seatCapacity, pricePerSeat) VALUES (?, ?, ?)';
 
-        const [newBus, _] = db.execute(query, [busNumber, seatCapacity, pricePerSeat, createdAt]);
+        const [newBus, _] = await db.execute(query, [this.busNumber, this.seatCapacity, this.pricePerSeat]);
         return newBus;
     }
 
-    static findBybusNumber(busNumber) {
-        const query = 'SELECT * FROM Bus WHERE busNumber=(?)';
+    static async findById(busId) {
+        console.log(`boom: ${busId}`);
+        const query = 'SELECT * FROM BUS WHERE id = ?';
 
-        const [bus, _] = db.query(query, [busNumber]);
-        return bus;
+        const [bus, _] = await db.execute(query, [busId]);
+        return bus[0];
     }
 }
 

@@ -1,4 +1,4 @@
-const db = require('./../config/db');
+const db = require('../config/db');
 
 class User {
     constructor(username, name, password) {
@@ -7,20 +7,19 @@ class User {
         this.password = password;
     }
 
-    save() {
-        const date = new Date();
-        const createdAt = date.toLocaleDateString();
-        const query = 'INSERT INTO User VALUES(?, ?, ?)';
-        
-        const [newUser, _] = db.execute(query, [this.username, this.name, this.password, createdAt]);
+    async save() {
+        const query = `INSERT INTO USER 
+        (username, name, password) VALUES (?, ?, ?)`;
+
+        const [newUser, _] = await db.execute(query, [this.username, this.name, this.password]);
         return newUser;
     }
 
-    static findByUsername(username) {
-        const query = 'SELECT * FROM User WHERE username=(?)';
+    static async findByUsername(username) {
+        const query = 'SELECT * FROM USER WHERE username = ?';
 
-        const [user, _] = db.query(query, [username]);
-        return user;
+        const [user, _] = await db.execute(query, [username]);
+        return user[0];
     }
 }
 
