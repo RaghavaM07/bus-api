@@ -15,7 +15,6 @@ class Bus {
     }
 
     static async findById(busId) {
-        console.log(`boom: ${busId}`);
         const query = 'SELECT * FROM BUS WHERE id = ?';
 
         const [bus, _] = await db.execute(query, [busId]);

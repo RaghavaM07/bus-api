@@ -11,7 +11,7 @@ router.post('/', asyncHandler(async (req, res) => {
     const newUser = new User(username, password, name);
     await newUser.save();
 
-    res.json({ username, name, password });
+    res.json({ message: 'Signup done. Please login.' });
 }));
 
 module.exports = router;

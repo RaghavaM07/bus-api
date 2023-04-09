@@ -6,7 +6,7 @@ const Schedule = require('../models/Schedule');
 
 const router = express.Router();
 
-router.get('/getBuses', asyncHandler(async (req, res) => {
+router.put('/getBuses', asyncHandler(async (req, res) => {
 	const { from, to, date } = req.body;
 
 	// Find route id

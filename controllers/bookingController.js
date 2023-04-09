@@ -24,7 +24,7 @@ const newBooking = asyncHandler(async (req, res) => {
 	const nBooking = new Booking(req.id, schedId, seats);
 	const r = await nBooking.save();
 
-	res.json(r);
+	res.json({ message: `Booking successful for ${seats} seats!` });
 });
 
 module.exports = { getBookedSeats, newBooking };

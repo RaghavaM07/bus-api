@@ -5,6 +5,6 @@ const isLoggedIn = require('../utils/isLoggedIn')
 const bookingController = require('../controllers/bookingController');
 
 router.post('/', isLoggedIn, bookingController.newBooking);
-router.get('/getBookedSeats', bookingController.getBookedSeats);
+router.put('/getBookedSeats', bookingController.getBookedSeats);
 
 module.exports = router;

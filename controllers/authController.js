@@ -7,7 +7,6 @@ const login = asyncHandler(async (req, res) => {
 
 	// Get user details by username
 	const user = await User.findByUsername(username);
-	console.log(user);
 
 	// Check password
 	if (user.password === password) {
@@ -17,9 +16,10 @@ const login = asyncHandler(async (req, res) => {
 		const token = jwt.sign(userObj, process.env.JWT_SECRET);
 		res.cookie('access_token', token, {
 			httpOnly: true,
-			expires: new Date(253402300799999)	// expires on 31-12-9999
+			sameSite: true,
+			maxAge: 24 * 60 * 60 * 1000
 		});
-		return res.status(200).json({ message: 'Login Success' });
+		return res.status(200).json({ message: 'Login Success', user: { id: user.id } });
 	} else {
 		res.status(401).json({ message: 'Login Failed' });
 	}
