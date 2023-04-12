@@ -1,7 +1,7 @@
 const db = require('../config/db');
 
 class User {
-    constructor(username, name, password) {
+    constructor({username, name, password}) {
         this.username = username;
         this.name = name;
         this.password = password;
@@ -17,8 +17,9 @@ class User {
 
     static async findByUsername(username) {
         const query = 'SELECT * FROM USER WHERE username = ?';
-
+        
         const [user, _] = await db.execute(query, [username]);
+        console.log(user);
         return user[0];
     }
 }

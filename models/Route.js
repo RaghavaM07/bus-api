@@ -15,8 +15,9 @@ class Route {
 
     static async findByFromTo(from, to) {
         const query = 'SELECT * FROM ROUTE WHERE ROUTE.from = ? AND ROUTE.to = ?';
-
+        
         const [route, _] = await db.execute(query, [from, to]);
+        
         return route[0];
     }
 }

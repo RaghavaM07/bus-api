@@ -4,11 +4,11 @@ const User = require('./../models/User');
 
 const router = express.Router();
 
-router.post('/', asyncHandler(async (req, res) => {
+router.post('/signup', asyncHandler(async (req, res) => {
     const { username, password, name } = req.body;
-
+    
     // create user
-    const newUser = new User(username, password, name);
+    const newUser = new User({username, password, name});
     await newUser.save();
 
     res.json({ message: 'Signup done. Please login.' });

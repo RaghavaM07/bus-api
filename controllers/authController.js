@@ -4,10 +4,10 @@ const User = require('../models/User');
 
 const login = asyncHandler(async (req, res) => {
 	const { username, password } = req.body;
-
+    
 	// Get user details by username
 	const user = await User.findByUsername(username);
-
+    
 	// Check password
 	if (user.password === password) {
 		const userObj = {

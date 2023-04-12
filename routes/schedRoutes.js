@@ -11,10 +11,10 @@ router.put('/getBuses', asyncHandler(async (req, res) => {
 
 	// Find route id
 	const route = await Route.findByFromTo(from, to);
-
+    
 	// Find sched item with rid, date
 	const scheds = await Schedule.getSched(date, route.id);
-
+    
 	// Find details of those buses
 	const resp = [];
 	for (const sched of scheds) {
