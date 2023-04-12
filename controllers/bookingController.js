@@ -27,4 +27,11 @@ const newBooking = asyncHandler(async (req, res) => {
 	res.json({ message: `Booking successful for ${seats} seats!` });
 });
 
-module.exports = { getBookedSeats, newBooking };
+const getMyBookings = asyncHandler(async(req, res) => {
+    const { id } = req.body;
+    
+    const myBookings = await Booking.getMyBookings(id);
+    return res.json(myBookings);
+});
+
+module.exports = { getBookedSeats, newBooking, getMyBookings };
