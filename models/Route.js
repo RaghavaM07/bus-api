@@ -7,16 +7,17 @@ class Route {
     }
 
     async save() {
-        const query = 'INSERT INTO ROUTE (from, to) VALUES (?, ?)';
+        const query = 'INSERT INTO ROUTE (fromm, too) VALUES (?, ?)';
 
         const [newRoute, _] = await db.execute(query, [from, to]);
         return newRoute;
     }
 
     static async findByFromTo(from, to) {
-        const query = 'SELECT * FROM ROUTE WHERE ROUTE.from = ? AND ROUTE.to = ?';
-
+        const query = 'SELECT * FROM ROUTE WHERE ROUTE.fromm = ? AND ROUTE.too = ?';
+        
         const [route, _] = await db.execute(query, [from, to]);
+        
         return route[0];
     }
 }
