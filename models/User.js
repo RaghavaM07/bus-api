@@ -17,7 +17,7 @@ class User {
 
     static async findByUsername(username) {
         const query = 'SELECT * FROM USER WHERE username = ?';
-        console.log(username);
+        
         const [user, _] = await db.execute(query, [username]);
         console.log(user);
         return user[0];

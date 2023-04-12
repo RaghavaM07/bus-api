@@ -25,7 +25,7 @@ class Schedule {
 
     static async getSched(date, rid) {
         const query = "SELECT * FROM SCHEDULE WHERE SCHEDULE.date=(?) AND routeID=(?)"
-        console.log(date, rid);
+        
         const [sched, _] = await db.execute(query, [date, rid]);
         
         return sched;

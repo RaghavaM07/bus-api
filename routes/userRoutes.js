@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post('/signup', asyncHandler(async (req, res) => {
     const { username, password, name } = req.body;
-    console.log(req.body);
+    
     // create user
     const newUser = new User({username, password, name});
     await newUser.save();
